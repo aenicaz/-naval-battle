@@ -16,7 +16,7 @@ namespace МорскойБой
         private const int port = 8888;
         static TcpClient client;
         static NetworkStream stream;
-        Board board;
+        Board boardEnemy;
 
 
         public static ServerObject getInstance()
@@ -29,21 +29,15 @@ namespace МорскойБой
 
         public ServerObject()
         {
-            board = new Board(350, 5, 10, Team.Enemy);
+            boardEnemy = new Board(350, 5, 10, Team.Enemy); // создаём объект вражеского поля
             
         }
-
-        void CreateEnemyBoard(string position)
-        {
-            string[] data = position.Split(' ');
-            board.createEnemyBoard(data); 
-        }
-
 
         public void Shoot(int number)
         {
-            
+            SendMessage($"Shoot {number}"); 
         }
+
         public void TryConnect()
         {
             
@@ -72,7 +66,8 @@ namespace МорскойБой
         {
 
             string data = GetMessage();
-            Action action = () => CreateEnemyBoard(data);
+            //Начинаем заполение вражеского поля
+            Action action = () => boardEnemy.createEnemyBoard(data);//CreateEnemyBoard(data);
             action.Invoke();
 
             //1 получаем позиции кораблей и передаёт в метод создания доски
@@ -80,7 +75,7 @@ namespace МорскойБой
             {
                 try
                 {
-                   
+                    Command(GetMessage());
                     //Например получаем текстовое сообщение от сервера
 
 
@@ -119,6 +114,27 @@ namespace МорскойБой
             while (stream.DataAvailable);
 
             return builder.ToString();
+        }
+
+        public void Command(string command)
+        {
+            string[] args = command.Split(' ');
+            switch (args[0])
+            {
+                case "Shoot":
+                    Board.boards[0].Shot(args[1]);
+                    break;
+                case "Flag":
+                    Form1.Busy = "true";
+                    break;
+                case "ChangeFlag":
+                    if (Form1.Busy == "true")
+                        Form1.Busy = "false";
+                    else
+                        Form1.Busy = "true";
+                    break;
+            }
+
         }
     }
 }

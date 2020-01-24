@@ -20,6 +20,8 @@ namespace ChatServer
             client = tcpClient;
             server = serverObject;
             serverObject.AddConnection(this);
+
+            //ClientEvents clientEvents = new ClientEvents(server, this.Id);
         }
 
         public void Process()
@@ -31,22 +33,27 @@ namespace ChatServer
 
                 boardData = GetMessage();
                 Console.WriteLine(boardData);
-                
 
-                
-                // в бесконечном цикле получаем сообщения от клиента
-                while (true)
+
+                while (!BoardIsSend)
                 {
-
-                    if (!BoardIsSend && server.CountConnections() == 2)
+                    if (server.CountConnections() == 2)
                     {
                         server.BroadcastMessage(boardData, this.Id);
                         BoardIsSend = true;
                     }
 
+                    System.Threading.Thread.Sleep(500);
+                }
+
+                
+
+                // в бесконечном цикле получаем сообщения от клиента
+                while (true)
+                {
                     try
                     {
-                        
+                        Command(GetMessage());
 
                     }
                     catch
@@ -55,7 +62,7 @@ namespace ChatServer
                         break;
                     }
 
-                    System.Threading.Thread.Sleep(100);
+                    System.Threading.Thread.Sleep(200);
                 }
                 
             }
@@ -75,10 +82,12 @@ namespace ChatServer
 
         public void Command(string command)
         {
-            string[] args = command.Split(';');
+            string[] args = command.Split(' ');
             switch(args[0])
             {
-               case "SendBoard":
+               case "Shoot":
+                    Shoot(args[1]);
+                    //server.BroadcastMessage("ChangeFlag", this.Id);
                     break;
             }
 
@@ -100,11 +109,6 @@ namespace ChatServer
             return builder.ToString();
         }
 
-        public void SendBoard()
-        {
-            
-        }
-
         // закрытие подключения
         protected internal void Close()
         {
@@ -112,6 +116,11 @@ namespace ChatServer
                 Stream.Close();
             if (client != null)
                 client.Close();
+        }
+
+        public void Shoot(string number)
+        {
+           server.BroadcastMessage($"Shoot {number}", this.Id);
         }
     }
 }

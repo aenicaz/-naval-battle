@@ -111,10 +111,10 @@ namespace МорскойБой
                     e.Graphics.FillRectangle(new SolidBrush(Color.FromArgb(0, 0, 200)), rect);
                     break;
                 case State.PartShipIsDestr: //отрисовка части не до конца подбитого корабля
-                    e.Graphics.FillRectangle(new SolidBrush(Color.FromArgb(0, 0, 200)), rect);
+                    e.Graphics.FillRectangle(new SolidBrush(Color.Red), rect);
                     break;
                 case State.ShipIsDestr: //отрисовка части полностью подбитого корабля
-                    e.Graphics.FillRectangle(new SolidBrush(Color.Red), rect);
+                    e.Graphics.FillRectangle(new SolidBrush(Color.Black), rect);
                     break;
                 case State.Block: //Поле заблокированное для размещения кораблей
                     e.Graphics.FillRectangle(new SolidBrush(colorCell), rect);
@@ -145,11 +145,14 @@ namespace МорскойБой
                     this.StateCell = State.EmptyShot;
                 }
                     
-
+                
                 if (this.StateCell == State.EnemyShip)
                     this.StateCell = State.PartShipIsDestr;
 
                 ServerObject.getInstance().Shoot(this.Number);
+                
+                Board.boards[1].UpdateStatusShip();
+                
             }
 
 

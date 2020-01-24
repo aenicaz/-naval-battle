@@ -21,8 +21,49 @@ namespace МорскойБой
             CreateShip();
         }
 
-        
+        public Ship(string pos , Board _board)
+        {
+            /*
+            length = _length;
+            cells = new Cell[length];
+            for(int i = 0; i <= 9; i++)
+                for(int k = 0; k <= 9; k++)
+                {
+                    for(int j = 0; j <= pos.Length; j++)
+                        if(board.cells[i,k].Number == pos[j])
+                        {
+                            board.cells[i, k].StateCell = State.EnemyShip;
+                            cells[j] = board.cells[i, j];
+                        }
+                }
+               */
+            string[] data = pos.Split(':');
+            length = data.Length - 1;
+            cells = new Cell[length];
+
+            for (int i = 0; i <= 9; i++)
+                for(int k = 0; k <= 9; k++)
+                {
+                    for (int j = 0; j <= length; j++)
+                        if (_board.cells[i, k].Number.ToString() == data[j])
+                        {
+                            _board.cells[i, k].StateCell = State.EnemyShip;
+                            cells[j] = _board.cells[i, k];
+                        }
+                }
+            //CreateEnemyShip(pos);
+        }
+
+        public int Length()
+        {
+            return length;
+        }
         //Размещение кораблей
+
+        public void CreateEnemyShip(string data)
+        {
+            
+        }
         public void CreateShip()
         {
             Random r = new Random();
@@ -43,9 +84,9 @@ namespace МорскойБой
                     {
                         board.cells[x, y].StateCell = State.Ship;
                         //Добавляем номер клетки в которой есть корабль
-                        board.positionShips.Add(board.cells[x, y].Number);
+                        board.positionShips.Add(board.cells[x, y].Number.ToString() + ":");
                         cells[0] = board.cells[x, y];
-
+                        board.positionShips.Add(",");
 
                         if (x > 8)
                         {
@@ -105,7 +146,7 @@ namespace МорскойБой
                         for (int i = 0; i <= length - 1; i++)
                         {
                             board.cells[x + i, y].StateCell = State.Ship;
-                            board.positionShips.Add(board.cells[x + i, y].Number);
+                            board.positionShips.Add(board.cells[x + i, y].Number.ToString() + ":");
                             cells[i] = board.cells[x + i, y];
 
                             if(i == 0)
@@ -131,9 +172,10 @@ namespace МорскойБой
                             }
 
                             flag = false;
+                            
                         }
+                        board.positionShips.Add(",");
 
-                        
                     }
 
                     if (x + length> 10 && vector == 0)
@@ -153,7 +195,7 @@ namespace МорскойБой
                         for (int i = 0; i <= length - 1; i++)
                         {
                             board.cells[x - i, y].StateCell = State.Ship;
-                            board.positionShips.Add(board.cells[x-i, y].Number);
+                            board.positionShips.Add(board.cells[x-i, y].Number.ToString() + ":");
                             cells[i] = board.cells[x - i, y];
 
                             if (i == 0)
@@ -179,7 +221,9 @@ namespace МорскойБой
                             }
 
                             flag = false;
+                           
                         }
+                        board.positionShips.Add(",");
                     }
 
                     if (y + length < 10 && vector == 1)
@@ -199,7 +243,7 @@ namespace МорскойБой
                         for (int i = 0; i <= length - 1; i++)
                         {
                             board.cells[x, y + i].StateCell = State.Ship;
-                            board.positionShips.Add(board.cells[x, y+i].Number);
+                            board.positionShips.Add(board.cells[x, y+i].Number.ToString() + ":");
                             cells[i] = board.cells[x, y + i];
 
                             if (i == 0)
@@ -228,7 +272,9 @@ namespace МорскойБой
                             }
 
                             flag = false;
+                            
                         }
+                        board.positionShips.Add(",");
                     }
 
                     if (y + length > 10 && vector == 1)
@@ -248,7 +294,7 @@ namespace МорскойБой
                         for (int i = 0; i <= length - 1; i++)
                         {
                             board.cells[x, y - i].StateCell = State.Ship;
-                            board.positionShips.Add(board.cells[x, y-i].Number);
+                            board.positionShips.Add(board.cells[x, y-i].Number.ToString() + ":");
                             cells[i] = board.cells[x, y - i];
 
                             if (i == 0)
@@ -276,18 +322,22 @@ namespace МорскойБой
                             }
 
                             flag = false;
-                        }
-                    }
 
+                        }
+                        board.positionShips.Add(",");
+                    }
+                  
                     System.Threading.Thread.Sleep(50);
                 }
+
+                
             }
         }
         //Проверка на полное уничтожение коробля
         public bool ShipIsDestr()
         {
             int count = 0;
-            for (int i = 0; i <= length; i++)
+            for (int i = 0; i < length; i++)
                 if (cells[i].StateCell == State.PartShipIsDestr)
                     count++;
 
@@ -299,10 +349,11 @@ namespace МорскойБой
            
         }
 
+
         //Уничтожаем корабль
         public void DestroyShip()
         {
-            for (int i = 0; i <= length; i++)
+            for (int i = 0; i < length; i++)
                 cells[i].StateCell = State.ShipIsDestr;
         }
     }

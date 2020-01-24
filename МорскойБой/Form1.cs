@@ -14,6 +14,7 @@ namespace МорскойБой
         ServerObject server;
         static Board boardOwn;
         static Board boardEnemy;
+        public static string Busy = "false";
 
         public Form1()
         {
