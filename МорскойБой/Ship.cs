@@ -11,7 +11,7 @@ namespace МорскойБой
         private int length; //длина корабля
         private Cell[] cells; //массив клеток ответственных за корабль
         private static Board board;
-
+        
         public Ship(int _lenght, Board _board) //конструктор 
         {
             length = _lenght;
@@ -355,6 +355,8 @@ namespace МорскойБой
         {
             for (int i = 0; i < length; i++)
                 cells[i].StateCell = State.ShipIsDestr;
+
+
         }
     }
 }

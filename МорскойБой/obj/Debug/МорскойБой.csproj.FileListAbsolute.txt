@@ -58,3 +58,13 @@ C:\Users\aenciaz\Desktop\МорскойБой\МорскойБой\-naval-battle
 C:\Users\aenciaz\Desktop\МорскойБой\МорскойБой\-naval-battle\МорскойБой\obj\Debug\МорскойБой.csproj.CoreCompileInputs.cache
 C:\Users\aenciaz\Desktop\МорскойБой\МорскойБой\-naval-battle\МорскойБой\obj\Debug\МорскойБой.exe
 C:\Users\aenciaz\Desktop\МорскойБой\МорскойБой\-naval-battle\МорскойБой\obj\Debug\МорскойБой.pdb
+C:\Users\aenciaz\Desktop\Морской\-naval-battle\МорскойБой\bin\Debug\МорскойБой.exe.config
+C:\Users\aenciaz\Desktop\Морской\-naval-battle\МорскойБой\bin\Debug\МорскойБой.exe
+C:\Users\aenciaz\Desktop\Морской\-naval-battle\МорскойБой\bin\Debug\МорскойБой.pdb
+C:\Users\aenciaz\Desktop\Морской\-naval-battle\МорскойБой\obj\Debug\МорскойБой.csprojAssemblyReference.cache
+C:\Users\aenciaz\Desktop\Морской\-naval-battle\МорскойБой\obj\Debug\МорскойБой.Form1.resources
+C:\Users\aenciaz\Desktop\Морской\-naval-battle\МорскойБой\obj\Debug\МорскойБой.Properties.Resources.resources
+C:\Users\aenciaz\Desktop\Морской\-naval-battle\МорскойБой\obj\Debug\МорскойБой.csproj.GenerateResource.cache
+C:\Users\aenciaz\Desktop\Морской\-naval-battle\МорскойБой\obj\Debug\МорскойБой.csproj.CoreCompileInputs.cache
+C:\Users\aenciaz\Desktop\Морской\-naval-battle\МорскойБой\obj\Debug\МорскойБой.exe
+C:\Users\aenciaz\Desktop\Морской\-naval-battle\МорскойБой\obj\Debug\МорскойБой.pdb

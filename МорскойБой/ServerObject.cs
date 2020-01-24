@@ -33,9 +33,10 @@ namespace МорскойБой
             
         }
 
-        public void Shoot(int number)
+        public void Shoot(int number, char hit)
         {
-            SendMessage($"Shoot {number}"); 
+            SendMessage($"Shoot {number} {hit}"); 
+
         }
 
         public void TryConnect()
@@ -122,18 +123,19 @@ namespace МорскойБой
             switch (args[0])
             {
                 case "Shoot":
-                    Board.boards[0].Shot(args[1]);
-                    break;
-                case "Flag":
-                    Form1.Busy = "true";
+                    Board.boards[0].Shoot(args[1]);
                     break;
                 case "ChangeFlag":
-                    if (Form1.Busy == "true")
-                        Form1.Busy = "false";
+                    if (Form1.Busy == Busy.on)
+                    {
+                        Form1.Busy = Busy.off;
+                        
+                    }  
                     else
-                        Form1.Busy = "true";
+                        Form1.Busy = Busy.on;
                     break;
             }
+            System.Threading.Thread.Sleep(200);
 
         }
     }

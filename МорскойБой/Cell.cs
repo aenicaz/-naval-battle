@@ -23,18 +23,19 @@ namespace МорскойБой
         private Team team; 
         //Цвет клетки
         private Color colorCell = Color.FromArgb(130, 140, 230);
+        
         //Color.FromArgb(0, 0, 200) - цвет корабля
         //Color.FromArgb(130, 140, 230) - стандартный цвет поля
 
         //Тип клетки
         private State stateCell = State.empty;
         //Доступность для заполнения
-        private bool busy = true;
-        
+              
         //Размеры клетки
         private int height = 28;
         private int width = 28;
  
+        //Номер клетки
         public int Number
         {
             get
@@ -47,12 +48,8 @@ namespace МорскойБой
             }
         }
 
-        public bool Busy
-        {
-            get { return busy; }
-            set { busy = value; }
-        }
         
+        //Цвет клетки
         public Color ColorCell
         {
             get
@@ -69,6 +66,7 @@ namespace МорскойБой
             }
         }
         
+        //Состояние клетки
         public State StateCell
         {
             get
@@ -82,6 +80,7 @@ namespace МорскойБой
             }
         }
 
+        //Принадлежность клетки
         public Team TeamCell
         {
             get
@@ -104,10 +103,10 @@ namespace МорскойБой
             base.OnPaint(e);
             switch(stateCell)
             {
-                case State.empty: //отрисовка пустого поля
+                case State.empty: //отрисовка пустого поля 
                     e.Graphics.FillRectangle(new SolidBrush(colorCell), rect);
                     break;
-                case State.Ship: //отрисовка поля с кораблём
+                case State.Ship: //отрисовка поля с кораблём у клиента
                     e.Graphics.FillRectangle(new SolidBrush(Color.FromArgb(0, 0, 200)), rect);
                     break;
                 case State.PartShipIsDestr: //отрисовка части не до конца подбитого корабля
@@ -123,7 +122,7 @@ namespace МорскойБой
                     e.Graphics.FillRectangle(new SolidBrush(colorCell), rect);
                     e.Graphics.FillEllipse(new SolidBrush(Color.Black), rectF);
                     break;
-                case State.EnemyShip: //отрисовка поля с чужим кораблём
+                case State.EnemyShip: //отрисовка не обнаруженного корабля на чужом поле
                     e.Graphics.FillRectangle(new SolidBrush(colorCell), rect);
                     break;
             }
@@ -138,20 +137,25 @@ namespace МорскойБой
         protected override void OnMouseClick(MouseEventArgs e)
         {
             base.OnMouseClick(e);
-            if (this.team == Team.Enemy)
+            //Если наша очередь нажимать и мы нажали на клетку противника то....
+            if (this.team == Team.Enemy && Form1.Busy == Busy.on)
             {
-                if (this.StateCell == State.empty)
+                if (this.StateCell == State.empty)  //Если нажали на пустую клетку противника
                 {
-                    this.StateCell = State.EmptyShot;
+                    ServerObject.getInstance().Shoot(this.Number, '-'); //Отрправили информацию о выстреле
+                    this.StateCell = State.EmptyShot; //Отрисовали выстрел по пустой клетке
+                    Form1.Busy = Busy.off; //Запрещаем стрелять ещё
                 }
                     
                 
-                if (this.StateCell == State.EnemyShip)
-                    this.StateCell = State.PartShipIsDestr;
+                if (this.StateCell == State.EnemyShip) //Если попали по кораблю
+                {
+                    this.StateCell = State.PartShipIsDestr; //Отрисовываем попадание по части корабля
+                    ServerObject.getInstance().Shoot(this.Number, '+'); //Отрправили информацию о выстреле
+                }
+                    
 
-                ServerObject.getInstance().Shoot(this.Number);
-                
-                Board.boards[1].UpdateStatusShip();
+                Board.boards[1].UpdateStatusShip(); //проверяем корабли на полное уничтожение
                 
             }
 
@@ -178,5 +182,11 @@ namespace МорскойБой
     {
         Own,
         Enemy
+    }
+
+    public enum Busy
+    {
+        on,
+        off
     }
 }

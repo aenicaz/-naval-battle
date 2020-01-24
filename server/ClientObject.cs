@@ -19,9 +19,7 @@ namespace ChatServer
             Id = Guid.NewGuid().ToString();
             client = tcpClient;
             server = serverObject;
-            serverObject.AddConnection(this);
-
-            //ClientEvents clientEvents = new ClientEvents(server, this.Id);
+            serverObject.AddConnection(this); 
         }
 
         public void Process()
@@ -34,12 +32,14 @@ namespace ChatServer
                 boardData = GetMessage();
                 Console.WriteLine(boardData);
 
-
                 while (!BoardIsSend)
                 {
                     if (server.CountConnections() == 2)
                     {
                         server.BroadcastMessage(boardData, this.Id);
+                        server.BroadcastMessage("ChangeFlag", this.Id);
+                        Console.WriteLine("Flag is change");
+                        //System.Threading.Thread.Sleep(200);
                         BoardIsSend = true;
                     }
 
@@ -87,7 +87,9 @@ namespace ChatServer
             {
                case "Shoot":
                     Shoot(args[1]);
-                    //server.BroadcastMessage("ChangeFlag", this.Id);
+                    System.Threading.Thread.Sleep(200);
+                    if(args[2] == "-")
+                        server.BroadcastMessage("ChangeFlag", this.Id);
                     break;
             }
 

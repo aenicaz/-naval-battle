@@ -13,13 +13,18 @@ namespace МорскойБой
     {
         public static List<Board> boards = new List<Board>();
 
-        Team team;
-        int pos_x;
+        
+        Team team;  //Принадлежность доски
+
+        int pos_x;  //Позиции доски
         int pos_y;
-        static Form1 form;
-        public Cell[,] cells;
-        public List<string> positionShips = new List<string>();
-        private Ship[] ships = new Ship[10];
+
+        static Form1 form;      //Форма на которой отображаем
+        public Cell[,] cells;   //Клетки принадлежащие доске
+
+        public List<string> positionShips = new List<string>(); //Позиции всех кораблей на доске
+        private Ship[] ships = new Ship[10]; //Корабли
+        private int AllDestroyShips;
         
 
         public Board(int x, int y, int size, Form1 _form, Team _team)
@@ -39,7 +44,7 @@ namespace МорскойБой
         }
 
         
-
+        //СОздание своей доски
         public void CreateBoard()
         {
             for (int i = 0; i < 10; i++)
@@ -54,6 +59,8 @@ namespace МорскойБой
 
             boards.Add(this);
         }
+
+        //Создание своих кораблей
         public void CreateShips(Board boardOwn)
         {
             ships[0] = new Ship(2, boardOwn);
@@ -68,7 +75,7 @@ namespace МорскойБой
             ships[9] = new Ship(1, boardOwn);
         }
 
-        //Создаём поля на доске
+        //Создаём доску противника, размещаем корабли
         public void createEnemyBoard(string data)
         {
             for (int i = 0; i < 10; i++)
@@ -77,14 +84,6 @@ namespace МорскойБой
                     Cell cell = new Cell();
                     cell.Location = new Point(pos_x + i * 30, pos_y + k * 30);
                     cell.TeamCell = team;
-                    /*
-                    for(int j = 0; j <= data.Length - 2; j++)
-                        if (Convert.ToInt32(data[j]) == cell.Number)
-                        {
-                            cell.StateCell = State.EnemyShip;
-                        }
-
-                    */
                     cells[i, k] = cell;
                     form.Invoke(new Action(() =>
                     {
@@ -94,6 +93,7 @@ namespace МорскойБой
                  
             boards.Add(this);
 
+
             string[] shipsPos = data.Split(',');
             for (int i = 0; i < ships.Length; i++)
             {
@@ -101,17 +101,27 @@ namespace МорскойБой
                 ships[i] = new Ship(pos, boards[1]);
             }
         }
+       
         //обнорвление состояние кораблей на полное уничтожение
         public void UpdateStatusShip()
         {
             for(int i = 0; i < ships.Length; i++)
             {
                 if (ships[i].ShipIsDestr())
+                {
                     ships[i].DestroyShip();
+
+                    AllDestroyShips++; //увеличиваем кол. уничтоженных корраблей
+                    if (AllDestroyShips >= 10)
+                        MessageBox.Show("Вы победили");
+                        
+                }
+                    
             }
             
         }
 
+        //Получить позиции кораблей на доске
         public string GetPositionShips()
         {
             //Записываем позиции всех кораблей в строку
@@ -125,12 +135,14 @@ namespace МорскойБой
             return data;
         }
 
-        public void Shot(string data)
+
+        //Обработка стрельбы
+        public void Shoot(string data)   //data - номер клетки
         {
             int number = Convert.ToInt32(data);
             for (int i = 0; i <= 9; i++)
                 for (int k = 0; k <= 9; k++)
-                    if (number == cells[i, k].Number)
+                    if (number == cells[i, k].Number) //проверяем состояние клетки. Пустая или с кораблём
                     {
                         if (cells[i, k].StateCell == State.empty || cells[i, k].StateCell == State.Block)
                             cells[i, k].StateCell = State.EmptyShot;

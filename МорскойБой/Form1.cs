@@ -14,7 +14,9 @@ namespace МорскойБой
         ServerObject server;
         static Board boardOwn;
         static Board boardEnemy;
-        public static string Busy = "false";
+        public static Busy  Busy;
+
+        
 
         public Form1()
         {
@@ -24,6 +26,11 @@ namespace МорскойБой
        private void StartClick(object sender, EventArgs e)
         {
             server.TryConnect();
+
+            if (checkBox1.Checked)
+                Busy = Busy.on;
+            else
+                Busy = Busy.off;
             //Создаем корабли на доске
             boardOwn.CreateShips(boardOwn);
             //Отправляем наши позции
@@ -37,5 +44,6 @@ namespace МорскойБой
             server = ServerObject.getInstance(); //создается объект сервера
             boardOwn.CreateBoard(); //создаётся наша доска
         }
+
     }
 }
