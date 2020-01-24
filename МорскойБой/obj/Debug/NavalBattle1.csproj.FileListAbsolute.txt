@@ -1,9 +1,0 @@
-D:\Trash\МорскойБой\МорскойБой\bin\Debug\МорскойБой.exe.config
-D:\Trash\МорскойБой\МорскойБой\bin\Debug\МорскойБой.exe
-D:\Trash\МорскойБой\МорскойБой\bin\Debug\МорскойБой.pdb
-D:\Trash\МорскойБой\МорскойБой\obj\Debug\NavalBattle1.csprojAssemblyReference.cache
-D:\Trash\МорскойБой\МорскойБой\obj\Debug\МорскойБой.Form1.resources
-D:\Trash\МорскойБой\МорскойБой\obj\Debug\МорскойБой.Properties.Resources.resources
-D:\Trash\МорскойБой\МорскойБой\obj\Debug\NavalBattle1.csproj.GenerateResource.cache
-D:\Trash\МорскойБой\МорскойБой\obj\Debug\МорскойБой.exe
-D:\Trash\МорскойБой\МорскойБой\obj\Debug\МорскойБой.pdb

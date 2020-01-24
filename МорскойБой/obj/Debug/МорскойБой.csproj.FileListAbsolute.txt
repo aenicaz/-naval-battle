@@ -28,3 +28,13 @@ C:\Users\good\Desktop\МорскойБой\МорскойБой\obj\Debug\Мор
 C:\Users\good\Desktop\МорскойБой\МорскойБой\bin\Debug\МорскойБой.exe.config
 C:\Users\good\Desktop\МорскойБой\МорскойБой\bin\Debug\МорскойБой.exe
 C:\Users\good\Desktop\МорскойБой\МорскойБой\bin\Debug\МорскойБой.pdb
+C:\Users\good\Desktop\Homew\МорскойБой\МорскойБой\bin\Debug\МорскойБой.exe.config
+C:\Users\good\Desktop\Homew\МорскойБой\МорскойБой\bin\Debug\МорскойБой.exe
+C:\Users\good\Desktop\Homew\МорскойБой\МорскойБой\bin\Debug\МорскойБой.pdb
+C:\Users\good\Desktop\Homew\МорскойБой\МорскойБой\obj\Debug\МорскойБой.csprojAssemblyReference.cache
+C:\Users\good\Desktop\Homew\МорскойБой\МорскойБой\obj\Debug\МорскойБой.Form1.resources
+C:\Users\good\Desktop\Homew\МорскойБой\МорскойБой\obj\Debug\МорскойБой.Properties.Resources.resources
+C:\Users\good\Desktop\Homew\МорскойБой\МорскойБой\obj\Debug\МорскойБой.csproj.GenerateResource.cache
+C:\Users\good\Desktop\Homew\МорскойБой\МорскойБой\obj\Debug\МорскойБой.csproj.CoreCompileInputs.cache
+C:\Users\good\Desktop\Homew\МорскойБой\МорскойБой\obj\Debug\МорскойБой.exe
+C:\Users\good\Desktop\Homew\МорскойБой\МорскойБой\obj\Debug\МорскойБой.pdb

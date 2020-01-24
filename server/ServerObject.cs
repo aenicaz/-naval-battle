@@ -13,6 +13,8 @@ namespace ChatServer
         static TcpListener tcpListener; // сервер для прослушивания
         List<ClientObject> clients = new List<ClientObject>(); // все подключения
 
+        
+
         protected internal void AddConnection(ClientObject clientObject)
         {
             clients.Add(clientObject);
@@ -34,7 +36,7 @@ namespace ChatServer
                 tcpListener = new TcpListener(IPAddress.Any, 8888);
                 tcpListener.Start();
                 Console.WriteLine("Сервер запущен. Ожидание подключений...");
-
+                
                 while (true)
                 {
                     TcpClient tcpClient = tcpListener.AcceptTcpClient();
@@ -73,6 +75,11 @@ namespace ChatServer
                 clients[i].Close(); //отключение клиента
             }
             Environment.Exit(0); //завершение процесса
+        }
+
+        public int CountConnections()
+        {
+            return clients.Count;
         }
     }
 }

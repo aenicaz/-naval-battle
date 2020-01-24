@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Net.Sockets;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace ChatServer
 {
@@ -10,6 +11,8 @@ namespace ChatServer
         protected internal NetworkStream Stream { get; private set; }
         TcpClient client;
         ServerObject server; // объект сервера
+        string boardData; //номера панелей в которых находятся корабли
+        bool BoardIsSend;
 
         public ClientObject(TcpClient tcpClient, ServerObject serverObject)
         {
@@ -23,21 +26,36 @@ namespace ChatServer
         {
             try
             {
- 
                 Stream = client.GetStream();
                 Console.WriteLine("Пользователь подключился");
+
+                boardData = GetMessage();
+                Console.WriteLine(boardData);
+                
+
+                
                 // в бесконечном цикле получаем сообщения от клиента
                 while (true)
                 {
+
+                    if (!BoardIsSend && server.CountConnections() == 2)
+                    {
+                        server.BroadcastMessage(boardData, this.Id);
+                        BoardIsSend = true;
+                    }
+
                     try
                     {
                         
+
                     }
                     catch
                     {
                         Console.WriteLine("Пользователь отключился");
                         break;
                     }
+
+                    System.Threading.Thread.Sleep(100);
                 }
                 
             }
@@ -54,10 +72,22 @@ namespace ChatServer
             }
         }
 
+
+        public void Command(string command)
+        {
+            string[] args = command.Split(';');
+            switch(args[0])
+            {
+               case "SendBoard":
+                    break;
+            }
+
+        }
+        
         // чтение входящего сообщения и преобразование в строку
         private string GetMessage()
         {
-            byte[] data = new byte[64]; // буфер для получаемых данных
+            byte[] data = new byte[1024]; // буфер для получаемых данных
             StringBuilder builder = new StringBuilder();
             int bytes = 0;
             do
@@ -68,6 +98,11 @@ namespace ChatServer
             while (Stream.DataAvailable);
 
             return builder.ToString();
+        }
+
+        public void SendBoard()
+        {
+            
         }
 
         // закрытие подключения
